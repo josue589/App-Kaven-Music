@@ -6,45 +6,113 @@
     <title>Escala Louvor</title>
     <link rel="manifest" href="manifest.json">
     <style>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
         :root {
-            --primary: #3366cc;
-            --success: #28a745;
-            --bg: #f8f9fa;
-            --text: #333;
-            --card-bg: #ffffff;
+            --primary: #4F46E5; /* Um azul/roxo moderno */
+            --primary-hover: #4338CA;
+            --success: #10B981;
+            --bg: #F3F4F6;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --card-bg: #FFFFFF;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 0; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
         .container { padding: 20px; max-width: 600px; margin: 0 auto; }
         
         /* Telas */
-        #tela-login { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
-        #tela-app { display: none; }
+        #tela-login { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 85vh; }
+        #tela-app { display: none; animation: fadeIn 0.4s ease; }
         
-        /* Cartões e Inputs */
-        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; width: 100%; box-sizing: border-box; }
-        input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Cartões */
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        /* Inputs */
+        input { 
+            width: 100%; 
+            padding: 16px; 
+            margin: 15px 0; 
+            border: 2px solid #E5E7EB; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box; 
+            transition: 0.3s;
+            outline: none;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
         
         /* Botões */
-        button { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:active { opacity: 0.8; }
-        button.btn-success { background: var(--success); }
-        button.btn-logout { background: #dc3545; padding: 8px 15px; width: auto; font-size: 14px; }
+        button { 
+            background: linear-gradient(135deg, var(--primary), #6366F1); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            width: 100%; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        button:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3); }
+        button.btn-success { background: linear-gradient(135deg, var(--success), #34D399); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        button.btn-logout { background: #FEE2E2; color: #EF4444; padding: 8px 16px; width: auto; font-size: 14px; box-shadow: none; font-weight: 500; }
         
         /* Navegação */
-        .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-        .nav-tab { flex: 1; padding: 10px; text-align: center; background: #ddd; border-radius: 8px; font-size: 14px; color: #555; white-space: nowrap; cursor: pointer; }
-        .nav-tab.active { background: var(--primary); color: white; font-weight: bold; }
+        .nav-tabs { display: flex; gap: 8px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-tab { 
+            flex: 1; 
+            padding: 12px 15px; 
+            text-align: center; 
+            background: white; 
+            border-radius: 12px; 
+            font-size: 14px; 
+            font-weight: 500;
+            color: var(--text-light); 
+            white-space: nowrap; 
+            cursor: pointer; 
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #F3F4F6;
+        }
+        .nav-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2); }
         
         /* Listas e Textos */
-        .header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .item-escala { border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 15px; background: #f9f9f9; padding: 10px 10px 10px 15px; border-radius: 0 8px 8px 0; }
-        .status-confirmado { color: var(--success); font-weight: bold; font-size: 12px; display: inline-block; margin-top: 5px; }
-        .status-pendente { color: #f39c12; font-weight: bold; font-size: 12px; display: inline-block; margin-top: 5px; }
+        .header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header-app h3 { margin: 0; color: var(--text); font-weight: 700; font-size: 20px;}
+        .item-escala { border-left: 5px solid var(--primary); padding-left: 20px; border-radius: 12px; }
+        .status-confirmado { color: var(--success); background: #D1FAE5; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 8px; }
+        .status-pendente { color: #D97706; background: #FEF3C7; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 8px; }
         
-        /* Cifra preservando quebras de linha */
-        .cifra-box { background: #eee; padding: 10px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; font-size: 14px; margin-top: 10px; }
+        /* Cifra */
+        .cifra-box { background: #1F2937; color: #E5E7EB; padding: 15px; border-radius: 10px; font-family: 'Courier New', monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; overflow-x: auto; }
         
-        #loading { display: none; text-align: center; color: #666; font-style: italic; margin: 20px 0; }
+        #loading { display: none; text-align: center; color: var(--primary); font-weight: 500; margin: 20px 0; }
+    </style>
     </style>
 </head>
 <body>
