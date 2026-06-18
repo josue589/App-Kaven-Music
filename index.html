@@ -7,53 +7,126 @@
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
+      :root {
             --primary: #4655F6; /* Azul da logo */
             --success: #A3E635; /* Verde limão da logo */
-            --bg: #F3F4F6;
+            --bg: #F4F7FB;
             --text: #1F2937;
             --text-light: #6B7280;
             --card-bg: #FFFFFF;
         }
         
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg); 
+            /* Fundo com um leve degradê muito suave para não ficar 100% cinzento */
+            background-image: linear-gradient(135deg, rgba(70, 85, 246, 0.03) 0%, rgba(163, 230, 53, 0.05) 100%);
+            color: var(--text); 
+            margin: 0; 
+            padding: 0; 
+            -webkit-font-smoothing: antialiased; 
+            min-height: 100vh;
+        }
+        
         .container { padding: 20px; max-width: 600px; margin: 0 auto; }
         
-        /* Telas */
+        /* Telas e Animações */
         #tela-login { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 85vh; }
-        #tela-app { display: none; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #tela-app { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Cartões */
-        .card { background: var(--card-bg); padding: 25px 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.5); }
+        /* Cartões com a BARRA LATERAL EM DEGRADÊ */
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04); 
+            margin-bottom: 20px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+        
+        /* A mágica da barra lateral lateral esquerda (Azul para Verde) */
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary), var(--success));
+        }
         
         /* Inputs */
-        input { width: 100%; padding: 16px; margin: 15px 0; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 16px; font-family: 'Poppins', sans-serif; box-sizing: border-box; transition: 0.3s; outline: none; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(70, 85, 246, 0.1); }
+        input { width: 100%; padding: 16px; margin: 15px 0; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 16px; font-family: 'Poppins', sans-serif; box-sizing: border-box; transition: 0.3s; outline: none; background: #F9FAFB; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(70, 85, 246, 0.1); background: white; }
         
-        /* Botões com o degradê da logo */
-        button { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; border: none; padding: 16px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(70, 85, 246, 0.3); }
-        button:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(70, 85, 246, 0.3); }
+        /* Botões */
+        button { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; border: none; padding: 16px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 15px rgba(70, 85, 246, 0.25); }
+        button:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(70, 85, 246, 0.2); }
         button.btn-success { background: linear-gradient(135deg, #10B981, #34D399); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-        button.btn-logout { background: #FEE2E2; color: #EF4444; padding: 8px 16px; width: auto; font-size: 14px; box-shadow: none; font-weight: 500; }
+        button.btn-logout { background: white; color: #EF4444; padding: 8px 16px; width: auto; font-size: 14px; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15); font-weight: 600; border: 1px solid #FEE2E2; border-radius: 10px; }
         
-        /* Navegação */
-        .nav-tabs { display: flex; gap: 8px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        /* Navegação Estilo App Premium (Fundo cinza, botão branco) */
+        .nav-tabs { 
+            display: flex; 
+            background: #E5E7EB; 
+            padding: 6px; 
+            border-radius: 14px; 
+            margin-bottom: 30px; 
+            overflow-x: auto; 
+            scrollbar-width: none; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
         .nav-tabs::-webkit-scrollbar { display: none; }
-        .nav-tab { flex: 1; padding: 12px 15px; text-align: center; background: white; border-radius: 12px; font-size: 14px; font-weight: 500; color: var(--text-light); white-space: nowrap; cursor: pointer; transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.02); border: 1px solid #F3F4F6; }
-        .nav-tab.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px rgba(70, 85, 246, 0.2); }
+        .nav-tab { 
+            flex: 1; 
+            padding: 12px 10px; 
+            text-align: center; 
+            background: transparent; 
+            border-radius: 10px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: var(--text-light); 
+            white-space: nowrap; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            border: none;
+        }
+        .nav-tab.active { 
+            background: white; 
+            color: var(--primary); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+        }
         
-        /* Listas e Textos */
-        .header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .header-app h3 { margin: 0; color: var(--text); font-weight: 700; font-size: 20px;}
-        .item-escala { border-left: 5px solid var(--success); padding-left: 20px; border-radius: 12px; }
-        .status-confirmado { color: #10B981; background: #D1FAE5; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 8px; }
-        .status-pendente { color: #D97706; background: #FEF3C7; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 8px; }
+        /* Cabeçalho do App */
+        .header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 10px 5px; }
+        .header-app h3 { margin: 0 0 4px 0; color: var(--text); font-weight: 700; font-size: 22px; letter-spacing: -0.5px; }
         
-        /* Cifra */
-        .cifra-box { background: #1F2937; color: #E5E7EB; padding: 15px; border-radius: 10px; font-family: 'Courier New', monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; overflow-x: auto; }
+        /* Função do utilizador pintada com o degradê da logo */
+        #user-funcao { 
+            background: linear-gradient(135deg, var(--primary), var(--success)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            font-weight: 800; 
+            font-size: 14px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         
-        #loading { display: none; text-align: center; color: var(--primary); font-weight: 500; margin: 20px 0; }
+        /* Status (Confirmado/Pendente) */
+        .status-confirmado { color: #059669; background: #D1FAE5; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 10px; border: 1px solid #A7F3D0; }
+        .status-pendente { color: #D97706; background: #FEF3C7; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; display: inline-block; margin-top: 10px; border: 1px solid #FDE68A; }
+        
+        /* Cifra com barra lateral verde */
+        .cifra-box { background: #1F2937; color: #E5E7EB; padding: 15px; border-radius: 12px; font-family: 'Courier New', monospace; white-space: pre-wrap; font-size: 14px; margin-top: 15px; overflow-x: auto; border-left: 4px solid var(--success); }
+        
+        /* Texto "Buscando dados..." com animação */
+        #loading { display: none; text-align: center; color: var(--primary); font-weight: 600; margin: 30px 0; font-size: 15px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
     </style>
 </head>
 <body>
