@@ -411,7 +411,7 @@
             if (res && res.sucesso) { alert("Presença confirmada!"); carregarMinhasEscalas(); } else { alert("Erro ao confirmar."); }
         }
 
-        async function carregarProximaEscala() {
+       async function carregarProximaEscala() {
             const div = document.getElementById('conteudo-aba');
             const res = await fetchAPI({ acao: 'proximaEscala' });
 
@@ -432,7 +432,7 @@
                 const diasNoMes = new Date(ano, mes + 1, 0).getDate();
                 const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-                // --- 2. DESENHAR O CALENDÁRIO ---
+                // --- 2. DESENHAR APENAS O CALENDÁRIO ---
                 let htmlCalendario = `
                 <div class="calendar-container">
                     <div class="calendar-header">
@@ -458,26 +458,8 @@
                 }
                 htmlCalendario += `</div></div>`;
 
-                // --- 3. DESENHAR A LISTA DA EQUIPE ---
-                let htmlLista = `<div class="card">
-                    <h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px; color:var(--primary);">Equipe do Culto - ${formatarData(res.data)}</h3>`;
-                
-                res.escalados.forEach(membro => {
-                    const statusIcon = (membro.status && membro.status.toUpperCase() === 'CONFIRMADO') ? '✅' : '⏳';
-                    
-                    // Se for o próprio usuário, destaca a linha dele!
-                    const isEu = (membro.nomeMembro === usuarioAtual.nome);
-                    const corTexto = isEu ? 'color: var(--primary); font-weight: bold; font-size: 16px;' : 'color: var(--text);';
-                    const estrela = isEu ? '⭐ (Você)' : '';
-
-                    htmlLista += `<p style="margin:10px 0; border-bottom:1px dashed #eee; padding-bottom:8px; ${corTexto}">
-                        <strong>${membro.funcao}:</strong> ${membro.nomeMembro} <span style="color:var(--success);">${estrela}</span> <span style="float:right;">${statusIcon}</span>
-                    </p>`;
-                });
-                htmlLista += `</div>`;
-
-                // Coloca o calendário e a lista na tela
-                div.innerHTML = htmlCalendario + htmlLista;
+                // Coloca APENAS o calendário na tela (removemos o htmlLista)
+                div.innerHTML = htmlCalendario;
             }
         }
 
