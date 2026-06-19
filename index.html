@@ -64,7 +64,22 @@
             width: 6px;
             background: linear-gradient(to bottom, var(--primary), var(--success));
         }
-         .card::before {
+        /* Cartões com a BARRA LATERAL EM DEGRADÊ */
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04); 
+            margin-bottom: 20px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+        
+        /* A mágica da barra lateral lateral esquerda (Azul para Verde) */
+        .card::before {
             content: '';
             position: absolute;
             right: 0;
