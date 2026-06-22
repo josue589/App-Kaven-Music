@@ -241,8 +241,44 @@
             }
         }
 
-        async function salvarConfiguracoes() {
-            alert("✨ A tela visual ficou incrível! O próximo passo agora é nós criarmos a função no Google Apps Script para este botão de salvar funcionar de verdade.");
+      async function salvarConfiguracoes() {
+            const novoNome = document.getElementById('novo-nome').value.trim();
+            const novoCodigo = document.getElementById('novo-codigo').value.trim();
+            
+            if (!novoNome) {
+                alert("O nome não pode ficar vazio!");
+                return;
+            }
+
+            // Prepara o "pacote" de dados para enviar para a planilha
+            const dados = {
+                acao: 'salvarPerfil',
+                codigoAtual: usuarioAtual.codigoOriginal,
+                novoNome: novoNome,
+                novoCodigo: novoCodigo,
+                novaFoto: novaFotoBase64 // Vai nulo se a pessoa não escolheu foto nova
+            };
+
+            const res = await postAPI(dados);
+
+            if (res && res.sucesso) {
+                alert("Perfil atualizado com sucesso!");
+                
+                // Atualiza a memória do celular
+                usuarioAtual.nome = novoNome;
+                if (novoCodigo) usuarioAtual.codigoOriginal = novoCodigo;
+                if (novaFotoBase64) usuarioAtual.foto = novaFotoBase64;
+                
+                localStorage.setItem('louvor_user', JSON.stringify(usuarioAtual));
+                
+                // Atualiza a tela instantaneamente
+                document.getElementById('user-nome').textContent = usuarioAtual.nome;
+                if (usuarioAtual.foto) document.getElementById('img-perfil').src = usuarioAtual.foto;
+                
+                fecharConfiguracoes();
+            } else {
+                alert("Erro ao salvar: " + (res ? res.erro : "Falha na conexão."));
+            }
         }
 
         /* --- FIM DAS CONFIGURAÇÕES --- */
