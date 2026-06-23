@@ -74,7 +74,8 @@
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
+        <!-- TELA DE LOGIN -->
         <div id="tela-login">
             <div class="card" style="text-align: center;">
                 <img src="icon-192.png?v=3" alt="Logo Shalom Music" style="width: 90px; border-radius: 22px; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
@@ -86,10 +87,11 @@
             </div>
         </div>
 
+        <!-- TELA PRINCIPAL DO APP -->
         <div id="tela-app">
             
-           <div class="header-app">
-                
+            <!-- CABEÇALHO DO APP COM FOTO CLICÁVEL -->
+            <div class="header-app">
                 <div class="profile-pic" onclick="abrirConfiguracoes()" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Editar Perfil">
                     <img id="img-perfil" src="" alt="Foto de Perfil">
                 </div>
@@ -101,12 +103,8 @@
 
                 <button class="btn-logout" onclick="fazerLogout()">Sair</button>
             </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-config" onclick="abrirConfiguracoes()">⚙️</button>
-                    <button class="btn-logout" onclick="fazerLogout()">Sair</button>
-                </div>
-            </div>
 
+            <!-- TELA DE CONFIGURAÇÕES -->
             <div id="tela-config" style="display: none; animation: fadeIn 0.4s ease;">
                 <div class="card">
                     <h3 style="margin-top:0; color:var(--primary); text-align:center; margin-bottom: 20px;">Configurações do Perfil</h3>
@@ -128,17 +126,18 @@
                 </div>
             </div>
 
+            <!-- MENUS DE NAVEGAÇÃO -->
             <div id="area-conteudo-principal">
-                    <div class="nav-tabs">
+                <div class="nav-tabs">
                     <div class="nav-tab active" onclick="mudarAba('minhas')">Minhas Escalas</div>
                     <div class="nav-tab" onclick="mudarAba('geral')">Próxima Geral</div>
                     <div class="nav-tab" onclick="mudarAba('repertorio')">Repertório</div>
-                    <div class="nav-tab" id="tab-admin" onclick="mudarAba('admin')" style="display:none; color:#00000; font-weight:800;">Visão Geral</div>
-                </div>
+                    <div class="nav-tab" id="tab-admin" onclick="mudarAba('admin')" style="display:none; color:#D97706; font-weight:800;">Visão Geral</div>
                 </div>
                 <div id="loading">Buscando dados...</div>
                 <div id="conteudo-aba"></div>
             </div>
+            
         </div>
     </div>
 
