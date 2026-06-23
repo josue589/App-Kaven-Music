@@ -128,7 +128,7 @@
                     <div class="nav-tab active" onclick="mudarAba('minhas')">Minhas Escalas</div>
                     <div class="nav-tab" onclick="mudarAba('geral')">Próxima Geral</div>
                     <div class="nav-tab" onclick="mudarAba('repertorio')">Repertório</div>
-                    <div class="nav-tab" id="tab-admin" onclick="mudarAba('admin')" style="display:none; color:#D97706; font-weight:800;">Visão Geral</div>
+                    <div class="nav-tab" id="tab-admin" onclick="mudarAba('admin')" style="display:none; color:#00000; font-weight:800;">Visão Geral</div>
                 </div>
                 </div>
                 <div id="loading">Buscando dados...</div>
@@ -386,7 +386,7 @@
                     return;
                 }
 
-               let html = '<h3 style="color:#000000; text-align:center; margin-bottom:20px;">Painel de Controle 👑</h3>';
+               let html = '<h3 style="color:#000000; text-align:center; margin-bottom:20px;">Painel de Controle </h3>';
                 let dataAtual = '';
 
                 res.escalas.forEach(esc => {
