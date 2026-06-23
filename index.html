@@ -88,14 +88,19 @@
 
         <div id="tela-app">
             
-            <div class="header-app">
-                <div class="profile-pic">
+           <div class="header-app">
+                
+                <div class="profile-pic" onclick="abrirConfiguracoes()" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" title="Editar Perfil">
                     <img id="img-perfil" src="" alt="Foto de Perfil">
                 </div>
+                
                 <div class="user-info">
                     <h3 id="user-nome">Nome</h3>
                     <small id="user-funcao">Função</small>
                 </div>
+
+                <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+            </div>
                 <div style="display: flex; gap: 8px;">
                     <button class="btn-config" onclick="abrirConfiguracoes()">⚙️</button>
                     <button class="btn-logout" onclick="fazerLogout()">Sair</button>
