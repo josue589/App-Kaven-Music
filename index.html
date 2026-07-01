@@ -16,7 +16,7 @@
             --card-bg: #FFFFFF;
         }
         
-        body { F
+        body {
             font-family: 'Poppins', sans-serif; 
             background-color: var(--bg); 
             background-image: url('FundoHDN.png'); background-size: cover; background-position: center; background-attachment: fixed; image-rendering: auto;
@@ -25,6 +25,11 @@
             padding: 0; 
             -webkit-font-smoothing: antialiased; 
             min-height: 100vh; 
+            
+            /* --- NOVA BORDA GRADIENTE DA TELA --- */
+            box-sizing: border-box; /* Garante que a borda caiba na tela perfeitamente */
+            border: 8px solid transparent; /* Define a espessura de 8px (pode alterar se quiser mais grossa) */
+            border-image: linear-gradient(to right, var(--primary), var(--success)) 1;
         }
         .container { padding: 20px; max-width: 600px; margin: 0 auto; margin-top: 8vh; }
         
