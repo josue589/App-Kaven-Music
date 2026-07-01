@@ -445,9 +445,8 @@
                     </select>
 
                     <label>Nome do Integrante:</label> 
-                    <select id="cad-esc-nome">
-                        <option value="">Buscando integrantes...</option>
-                    </select>
+                    <input list="lista-membros" id="cad-esc-nome" placeholder="Buscando integrantes..." autocomplete="off">
+                    <datalist id="lista-membros"></datalist>
 
                     <button onclick="salvarNovaEscala()" style="margin-top:15px;">💾 Salvar Escala</button>
                     <button onclick="mudarAba('admin')" style="background:none; color:var(--text-light); box-shadow:none; margin-top:5px;">Cancelar</button>
