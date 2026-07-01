@@ -116,41 +116,8 @@
         .calendar-day.scheduled { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(70, 85, 246, 0.3); border: none; }
         
         label { font-weight: 600; font-size: 14px; color: var(--text-light); margin-left: 5px; display: block; margin-top: 15px; }
-/* Estado limpo e seguro do Card de Login */
-.card-login {
-    /* Fundo escuro e levemente transparente para a pegada moderna/minimalista */
-    background-color: rgba(32, 33, 36, 0.85); 
-    padding: 30px 20px;
-    border-radius: 15px;
-    
-    /* Garantindo que não há nenhuma borda de gradiente ativa */
-    border: none; 
-    background-image: none;
-    
-    /* Sombra suave para destacar o card do fundo embaçado */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-    
-    /* Outras propriedades de alinhamento que você já possuía (ex: text-align, width, etc) */
-    text-align: center;
-    width: 90%;
-    max-width: 400px; /* Mantendo o mobile-first, mas expansível para desktop */
-}
-        /* Ajustes dos textos para combinar com o fundo escuro */
-        #tela-login .card h2 { color: #FFFFFF !important; }
-        #tela-login .card p { color: #D1D5DB !important; }
-        
-        /* Ajuste do Campo de Input para ficar como na imagem */
-        #tela-login .card input {
-            background: rgba(255, 255, 255, 0.05); /* Fundo quase transparente */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Borda cinza bem fina */
-            color: #FFFFFF; /* Texto branco */
-            backdrop-filter: blur(4px); /* Efeito de vidro no input */
-        }
-        
-        #tela-login .card input:focus {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
+.card { background: var(--card-bg); padding: 25px 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); margin-bottom: 20px; width: 100%; box-sizing: border-box; position: relative; overflow: hidden; border: none; }
+        .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
     </style>
 </head>
 <body>
