@@ -116,24 +116,33 @@
         .calendar-day.scheduled { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(70, 85, 246, 0.3); border: none; }
         
         label { font-weight: 600; font-size: 14px; color: var(--text-light); margin-left: 5px; display: block; margin-top: 15px; }
-        /* --- VISUAL EXCLUSIVO DO CARD DE LOGIN (COMO NA IMAGEM) --- */
-        #tela-login .card {
-            background: #1F2937; /* Fundo cinza bem escuro */
-            overflow: visible; /* Permite que a borda passe do limite */
-            z-index: 1; /* Mantém o texto/inputs na frente */
-            box-shadow: 0 15px 50px rgba(0,0,0,0.6); /* Sombra para destacar do fundo HDN */
-        }
+     /* ANTES (Como estava na imagem errada) */
+.card-login {
+    /* Provavelmente tinha algo como isto, que preenchia o fundo */
+    background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
+    padding: 20px;
+    border-radius: 15px;
+    /* ... outras propriedades ... */
+}
 
-        #tela-login .card::before {
-            content: '';
-            position: absolute;
-            top: -3px; bottom: -3px; left: -3px; right: -3px; /* Define a espessura nos 4 lados */
-            width: auto; /* Sobrescreve os 6px originais */
-            background: linear-gradient(135deg, var(--primary), var(--success));
-            z-index: -1; /* Joga o degradê para trás da caixa escura */
-            border-radius: 19px; /* Arredondamento exato: 16px da caixa + 3px da borda */
-            filter: blur(1px); /* Aquele leve efeito 'glow' da imagem */
-        }
+/* DEPOIS (O ajuste correto) */
+/* Remova o gradiente do fundo do card e aplique-o como borda */
+.card-login {
+    background-color: transparent; /* Fundo do container transparente */
+    padding: 20px;
+    border-radius: 15px;
+    
+    /* ESSA É A PARTE IMPORTANTE: Cria a borda com gradiente */
+    border: 3px solid transparent; /* Cria o espaço da borda */
+    background-image: linear-gradient(#202124, #202124), /* Fundo interno escuro */
+                      linear-gradient(135deg, #4285F4 0%, #34A853 100%); /* O gradiente da borda */
+    background-origin: border-box;
+    background-clip: content-box, border-box; /* O pulo do gato: corta o fundo interno e a borda */
+    
+    /* Centralização e Sombra (Mantenha ou adicione) */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    /* ... outras propriedades de tamanho e posição ... */
+}
 
         /* Ajustes dos textos para combinar com o fundo escuro */
         #tela-login .card h2 { color: #FFFFFF !important; }
