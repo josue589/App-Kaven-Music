@@ -247,11 +247,13 @@
             document.getElementById('user-nome').textContent = usuarioAtual.nome;
             document.getElementById('user-funcao').textContent = usuarioAtual.funcao; 
             
-            if (usuarioAtual.foto) {
-                document.getElementById('img-perfil').src = usuarioAtual.foto;
+           const f = usuarioAtual.funcao.toUpperCase();
+            
+            // Nova regra: Se tiver "ADMIN" em qualquer parte do nome da função, libera a aba
+            if (f.includes("ADMIN")) {
+                document.getElementById('tab-admin').style.display = 'block';
             } else {
-                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(usuarioAtual.nome)}&background=4655F6&color=fff&bold=true&rounded=true&size=120`;
-                document.getElementById('img-perfil').src = avatarUrl;
+                document.getElementById('tab-admin').style.display = 'none';
             }
 
             const f = usuarioAtual.funcao.toUpperCase();
