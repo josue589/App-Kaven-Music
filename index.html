@@ -255,7 +255,9 @@
             }
 
             const f = usuarioAtual.funcao.toUpperCase();
-            if (f === "MINISTRO" || f === "ADMINISTRADOR" || f === "LÍDER" || f === "LIDER") {
+            
+            // Nova regra: Apenas quem tem a função EXATA de "Administrador" vê a aba
+            if (f === "ADMINISTRADOR") {
                 document.getElementById('tab-admin').style.display = 'block';
             } else {
                 document.getElementById('tab-admin').style.display = 'none';
