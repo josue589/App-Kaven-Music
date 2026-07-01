@@ -53,8 +53,63 @@
             html::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to right, var(--primary), var(--success)); z-index: 101; }
         }
 
-        .card { background: var(--card-bg); padding: 25px 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); margin-bottom: 20px; width: 100%; box-sizing: border-box; position: relative; overflow: hidden; border: none; }
-        .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
+        .card-login-novo { 
+            background-color: #1a1a1a !important; /* Fundo escuro */
+            padding: 40px 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+            text-align: center; 
+            max-width: 350px; 
+            margin: 0 auto; 
+            position: relative; 
+            box-sizing: border-box;
+            border: solid 2px transparent; /* Reserva o espaço da borda */
+        }
+
+        /* Efeito da Borda em Gradiente Tríplice (Roxo -> Azul -> Verde) */
+        .card-login-novo::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px; 
+            border-radius: inherit; 
+            background-image: linear-gradient(135deg, #7B1FA2 0%, #4655F6 50%, #A3E635 100%);
+        }
+
+        /* Ajuste do campo de texto para combinar com o fundo escuro */
+        .input-login-novo {
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0 25px 0;
+            border: 1px solid #333;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            outline: none;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        .input-login-novo:focus {
+            border-color: #4655F6;
+            box-shadow: 0 0 0 3px rgba(70, 85, 246, 0.2);
+        }
+
+        /* Ajuste do Botão com o Gradiente da Imagem (Azul -> Verde) */
+        .btn-login-novo {
+            background: linear-gradient(135deg, #4655F6 0%, #A3E635 100%) !important;
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(70, 85, 246, 0.2);
+        }
         
         input, select { width: 100%; padding: 16px; margin: 10px 0 20px 0; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 16px; font-family: 'Poppins', sans-serif; box-sizing: border-box; transition: 0.3s; outline: none; background: #F9FAFB; }
         
