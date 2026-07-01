@@ -458,17 +458,20 @@
         }
 
         async function preencherSelectMembros() {
-            const selectNome = document.getElementById('cad-esc-nome');
+            const inputNome = document.getElementById('cad-esc-nome');
+            const dataList = document.getElementById('lista-membros');
             const res = await fetchAPI({ acao: 'listarMembros' });
 
             if (res && res.sucesso && res.membros) {
-                selectNome.innerHTML = '<option value="">Selecione o integrante...</option>';
-                // Ordena os nomes em ordem alfabética
+                inputNome.placeholder = "Clique ou digite para pesquisar...";
+                dataList.innerHTML = ''; // Limpa a lista antes de preencher
+                
+                // Ordena os nomes em ordem alfabética e preenche o datalist
                 res.membros.sort().forEach(membro => {
-                    selectNome.innerHTML += `<option value="${membro}">${membro}</option>`;
+                    dataList.innerHTML += `<option value="${membro}">`;
                 });
             } else {
-                selectNome.innerHTML = '<option value="">Erro ao carregar nomes</option>';
+                inputNome.placeholder = "Erro ao carregar nomes";
             }
         }
         async function salvarNovaEscala() {
