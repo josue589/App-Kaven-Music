@@ -467,11 +467,11 @@
                 substituto: substituto.trim() 
             });
 
-            if (res && res.sucesso) { 
+           if (res && res.sucesso) { 
                 alert("Escala declinada com sucesso. Substituto registrado!"); 
                 carregarMinhasEscalas(); 
             } else { 
-                alert("Erro ao declinar a escala."); 
+                alert("Falha ao declinar:\n" + (res && res.erro ? res.erro : "O Google Apps Script não processou o comando. Verifique se a Nova Implantação foi feita.")); 
             }
         }
 
