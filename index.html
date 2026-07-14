@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shalom Music</title>
+    <title>Louve</title>
     <link rel="icon" type="image/png" href="icon-512.png">
     <link rel="apple-touch-icon" href="icon-512.png">
     <link rel="manifest" href="manifest.json">
@@ -27,16 +27,14 @@
             padding: 0; 
             -webkit-font-smoothing: antialiased; 
             min-height: 100vh; 
-         /* --- NOVA BORDA GRADIENTE DA TELA --- */
             box-sizing: border-box; 
-            border: 4px solid transparent; /* Reduzido de 50px para 4px. Use 0px se quiser remover a moldura por completo */
+            border: 4px solid transparent;
             border-image: linear-gradient(to right, var(--primary), var(--success)) 1;
         }
 
-        /* Ajuste específico para garantir que a moldura suma ou fique fina no celular */
         @media (max-width: 768px) {
             body {
-                border-width: 0px; /* 0px remove a moldura no celular para ganhar espaço */
+                border-width: 0px;
             }
         }
         
@@ -55,27 +53,11 @@
         .user-info { flex-grow: 1; text-align: center; padding: 0 10px; }
         .header-app h3 { margin: 0 0 4px 0; color: var(--text); font-weight: 700; font-size: 20px; letter-spacing: -0.5px; }
         #user-funcao { background: linear-gradient(135deg, var(--primary), var(--success)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }   
-}
+        
         .card-login-novo { 
-            background-color: #1a1a1a !important; /* Fundo escuro */
-            padding: 40px 30px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-            text-align: center; 
-            max-width: 350px; 
-            margin: 0 auto; 
-            position: relative; 
-            box-sizing: border-box;
-            border: solid 2px transparent; /* Reserva o espaço da borda */
-        }
-
-      /* Atualização do Card de Login com a borda gradiente definitiva */
-        .card-login-novo { 
-            /* Mágica da borda gradiente (Fundo Escuro + Borda Colorida) */
             background: linear-gradient(#1a1a1a, #1a1a1a) padding-box,
                         linear-gradient(135deg, #7B1FA2 0%, #4655F6 50%, #A3E635 100%) border-box;
-            border: 3px solid transparent; /* Largura da borda (pode aumentar se quiser) */
-            
+            border: 3px solid transparent; 
             padding: 40px 30px; 
             border-radius: 20px; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
@@ -86,7 +68,6 @@
             box-sizing: border-box;
         }
 
-        /* Ajuste do campo de texto para combinar com o fundo escuro */
         .input-login-novo {
             width: 100%;
             padding: 16px;
@@ -105,7 +86,6 @@
             box-shadow: 0 0 0 3px rgba(70, 85, 246, 0.2);
         }
 
-        /* Ajuste do Botão com o Gradiente da Imagem (Azul -> Verde) */
         .btn-login-novo {
             background: linear-gradient(135deg, #4655F6 0%, #A3E635 100%) !important;
             color: white;
@@ -125,6 +105,8 @@
         button { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; border: none; padding: 16px; width: 100%; border-radius: 50px; font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 15px rgba(70, 85, 246, 0.25); }
         button:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(70, 85, 246, 0.2); }
         button.btn-success { background: linear-gradient(135deg, #10B981, #34D399); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        button.btn-danger { background: linear-gradient(135deg, #EF4444, #B91C1C); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .botoes-escala { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         
         button.btn-logout { 
             background: linear-gradient(to right, var(--primary), var(--success)); 
@@ -185,7 +167,7 @@
         .calendar-day.scheduled { background: linear-gradient(135deg, var(--primary), var(--success)); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(70, 85, 246, 0.3); border: none; }
         
         label { font-weight: 600; font-size: 14px; color: var(--text-light); margin-left: 5px; display: block; margin-top: 15px; }
-.card { background: var(--card-bg); padding: 25px 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); margin-bottom: 20px; width: 100%; box-sizing: border-box; position: relative; overflow: hidden; border: none; }
+        .card { background: var(--card-bg); padding: 25px 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); margin-bottom: 20px; width: 100%; box-sizing: border-box; position: relative; overflow: hidden; border: none; }
         .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
     </style>
 </head>
@@ -194,9 +176,9 @@
     <div class="container">
         <div id="tela-login">
             <div class="card-login-novo">
-                <img src="icon-512.png?v=3" alt="Logo Shalom Music" style="width: 125px; height: 110px; border-radius: 20px; margin-bottom: 15px; object-fit: cover;">
+                <img src="icon-512.png?v=3" alt="Logo Louve" style="width: 125px; height: 110px; border-radius: 20px; margin-bottom: 15px; object-fit: cover;">
                 
-                <h2 style="margin-top:0; color: #fff; font-weight: 700; font-size: 32px; margin-bottom: 5px;">Shalom Music</h2>
+                <h2 style="margin-top:0; color: #fff; font-weight: 700; font-size: 32px; margin-bottom: 5px;">Louve</h2>
                 <p style="color: #cfd8dc; font-size: 14px; margin-bottom: 25px;">O Tom certo para a sua Equipe</p>
                 
                 <input type="password" id="codigo" class="input-login-novo" placeholder="Insira seu Código" onkeypress="if(event.key === 'Enter') fazerLogin()">
@@ -444,7 +426,17 @@
                     res.escalas.forEach(esc => {
                         const dataFormatada = formatarData(esc.data);
                         const pendente = !esc.status || esc.status.toUpperCase() !== 'CONFIRMADO';
-                        htmlLista += `<div class="card item-escala"><h3 style="margin:0 0 8px 0; color:#000000;">🗓️ ${dataFormatada}</h3><p style="margin:0; color:#000000;"><strong>Função:</strong> ${esc.funcao}</p><p style="margin:0;">${pendente ? `<span class="status-pendente">Aguardando Confirmação</span>` : `<span class="status-confirmado">Presença Confirmada</span>`}</p>${pendente ? `<button class="btn-success" style="margin-top:15px;" onclick="confirmar('${esc.data}')">Confirmar Presença</button>` : ''}</div>`;
+                        
+                        htmlLista += `<div class="card item-escala">
+                            <h3 style="margin:0 0 8px 0; color:#000000;">🗓️ ${dataFormatada}</h3>
+                            <p style="margin:0; color:#000000;"><strong>Função:</strong> ${esc.funcao}</p>
+                            <p style="margin:0;">${pendente ? `<span class="status-pendente">Aguardando Confirmação</span>` : `<span class="status-confirmado">Presença Confirmada</span>`}</p>
+                            ${pendente ? `
+                            <div class="botoes-escala">
+                                <button class="btn-success" style="margin-top: 0;" onclick="confirmar('${esc.data}')">Confirmar Presença</button>
+                                <button class="btn-danger" style="margin-top: 0;" onclick="solicitarDeclinio('${esc.data}')">Declinar Escala</button>
+                            </div>` : ''}
+                        </div>`;
                     });
                 }
                 div.innerHTML = htmlCalendario + htmlLista;
@@ -456,6 +448,33 @@
             if (res && res.sucesso) { alert("Presença confirmada!"); carregarMinhasEscalas(); } else { alert("Erro ao confirmar."); }
         }
 
+        async function solicitarDeclinio(dataIso) {
+            const substituto = prompt("Para declinar, é obrigatório informar um substituto.\nDigite o nome do integrante que irá no seu lugar:");
+            
+            if (substituto === null) {
+                return; // O usuário clicou em "Cancelar" no prompt
+            }
+            
+            if (substituto.trim() === "") {
+                alert("Você precisa informar o nome do substituto para declinar a escala.");
+                return solicitarDeclinio(dataIso); // Reabre o prompt se tentar enviar vazio
+            }
+
+            const res = await postAPI({ 
+                acao: 'declinarPresenca', 
+                nome: usuarioAtual.nome, 
+                dataCulto: dataIso, 
+                substituto: substituto.trim() 
+            });
+
+            if (res && res.sucesso) { 
+                alert("Escala declinada com sucesso. Substituto registrado!"); 
+                carregarMinhasEscalas(); 
+            } else { 
+                alert("Erro ao declinar a escala."); 
+            }
+        }
+
         async function carregarTodasEscalas() {
             const div = document.getElementById('conteudo-aba');
             const res = await fetchAPI({ acao: 'todasEscalas' });
@@ -464,7 +483,7 @@
                 // Adiciona o Painel de Botões de Cadastro Exclusivo do Ministro
                 let htmlAdminBox = `
                     <div class="card" style="margin-bottom:20px; text-align:center;">
-                        <h4 style="margin-top:0; margin-bottom:10px; color: #000000(--primary);"> Painel de Gerenciamento</h4>
+                        <h4 style="margin-top:0; margin-bottom:10px; color: var(--primary);"> Painel de Gerenciamento</h4>
                         <button class="btn-admin-panel" onclick="abrirFormEscala()">➕ Escala</button>
                         <button class="btn-admin-panel" onclick="abrirFormRepertorio()">➕ Música</button>
                         <button class="btn-admin-panel" onclick="abrirFormMembro()">➕ Membro</button>
@@ -473,7 +492,7 @@
 
                 if (res.escalas.length === 0) { div.innerHTML = htmlAdminBox + `<div class="card"><p style="color:#000000;">Nenhuma escala futura encontrada.</p></div>`; return; }
 
-                let html = htmlAdminBox + '<h3 style="color:#FFFFFF; text-align:center; margin-bottom:20px;">Painel de Controle</h3>';
+                let html = htmlAdminBox + '<h3 style="color:#1F2937; text-align:center; margin-bottom:20px;">Painel de Controle</h3>';
                 let dataAtual = '';
 
                 res.escalas.forEach(esc => {
@@ -676,7 +695,7 @@
                 if (res && res.sucesso) {
                     if (!res.musicas || res.musicas.length === 0) { div.innerHTML = `<div class="card"><p style="color:#000000;">Nenhum repertório futuro cadastrado.</p></div>`; return; }
                     
-                    let html = '<h3 style="color:#FFFFFF; text-align:center; margin-bottom:20px;">Repertório dos Cultos 🎵</h3>'; 
+                    let html = '<h3 style="color:#1F2937; text-align:center; margin-bottom:20px;">Repertório dos Cultos 🎵</h3>'; 
                     let dataAtual = '';
                     
                     res.musicas.forEach(musica => {
