@@ -1,10 +1,17 @@
 {
-  "name": "Escala de Louvor",
-  "short_name": "Louvor",
-  "start_url": "./index.html",
+  "name": "Louve - Ministério de Louvor",
+  "short_name": "Louve",
+  "description": "Aplicativo moderno e prático para gestão de escalas, repertório e membros do ministério de louvor.",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#f8f9fa",
-  "theme_color": "#3366cc",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "orientation": "portrait-primary",
+  "categories": [
+    "productivity",
+    "music",
+    "lifestyle"
+  ],
   "icons": [
     {
       "src": "icon-512.png",
@@ -15,6 +22,26 @@
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Escalas",
+      "short_name": "Escalas",
+      "description": "Confira quem está escalado",
+      "url": "./"
+    },
+    {
+      "name": "Repertório",
+      "short_name": "Músicas",
+      "description": "Acesse a lista de louvores",
+      "url": "./"
     }
   ]
 }
