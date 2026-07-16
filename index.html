@@ -476,30 +476,62 @@
             if (res && res.sucesso) { alert("Presença confirmada!"); carregarMinhasEscalas(); } else { alert("Erro ao confirmar."); }
         }
 
+        let dataCultoDeclinio = null; // Guarda a data temporariamente
+
         async function solicitarDeclinio(dataIso) {
-            const substituto = prompt("Para declinar, é obrigatório informar um substituto.\nDigite o nome do integrante que irá no seu lugar:");
+            dataCultoDeclinio = dataIso;
+            const modal = document.getElementById('modal-declinio');
+            const select = document.getElementById('select-substituto');
             
-            if (substituto === null) {
-                return; // O usuário clicou em "Cancelar" no prompt
+            // 1. Abre o modal e mostra mensagem de carregando
+            modal.style.display = 'flex';
+            select.innerHTML = '<option value="">Buscando integrantes...</option>';
+
+            // 2. Puxa a lista de membros do seu banco de dados
+            const res = await fetchAPI({ acao: 'listarMembros' });
+
+            // 3. Preenche o select com os nomes corretos
+            if (res && res.sucesso && res.membros) {
+                select.innerHTML = '<option value="">Selecione quem vai no seu lugar...</option>';
+                res.membros.sort().forEach(membro => {
+                    // Evita listar o próprio nome do músico logado como opção de substituto
+                    if (membro !== usuarioAtual.nome) {
+                        select.innerHTML += `<option value="${membro}">${membro}</option>`;
+                    }
+                });
+            } else {
+                select.innerHTML = '<option value="">Erro ao carregar lista</option>';
             }
+        }
+
+        function fecharModalDeclinio() {
+            document.getElementById('modal-declinio').style.display = 'none';
+            document.getElementById('select-substituto').innerHTML = '';
+            dataCultoDeclinio = null;
+        }
+
+        async function confirmarDeclinioModal() {
+            const substituto = document.getElementById('select-substituto').value;
             
-            if (substituto.trim() === "") {
-                alert("Você precisa informar o nome do substituto para declinar a escala.");
-                return solicitarDeclinio(dataIso); // Reabre o prompt se tentar enviar vazio
+            if (!substituto) {
+                alert("Por favor, selecione um integrante da lista para te substituir.");
+                return;
             }
+
+            fecharModalDeclinio(); // Fecha a tela e inicia o processo
 
             const res = await postAPI({ 
                 acao: 'declinarPresenca', 
                 nome: usuarioAtual.nome, 
-                dataCulto: dataIso, 
-                substituto: substituto.trim() 
+                dataCulto: dataCultoDeclinio, 
+                substituto: substituto 
             });
 
-           if (res && res.sucesso) { 
+            if (res && res.sucesso) { 
                 alert("Escala declinada com sucesso. Substituto registrado!"); 
                 carregarMinhasEscalas(); 
             } else { 
-                alert("Falha ao declinar:\n" + (res && res.erro ? res.erro : "O Google Apps Script não processou o comando. Verifique se a Nova Implantação foi feita.")); 
+                alert("Falha ao declinar:\n" + (res && res.erro ? res.erro : "O servidor não processou o comando.")); 
             }
         }
 async function carregarTodasEscalas() {
