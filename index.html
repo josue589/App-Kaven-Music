@@ -226,6 +226,20 @@
             </div>
 
             <div id="area-conteudo-principal">
+                <div id="modal-declinio" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center; padding:20px; box-sizing:border-box; backdrop-filter: blur(5px);">
+                <div class="card" style="max-width: 400px; width:100%; position:relative; animation: fadeIn 0.3s ease; border: 2px solid #B91C1C;">
+                    <h3 style="color:#B91C1C; margin-top:0;">Declinar Escala</h3>
+                    <p style="font-size:14px; color:var(--text-light); margin-bottom: 20px;">Para declinar, é obrigatório informar quem irá cobrir sua vaga.</p>
+                    
+                    <label>Selecione o substituto:</label>
+                    <select id="select-substituto">
+                        <option value="">Carregando membros...</option>
+                    </select>
+
+                    <button onclick="confirmarDeclinioModal()" style="margin-top:20px; background: linear-gradient(135deg, #EF4444, #B91C1C); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">Confirmar Troca</button>
+                    <button onclick="fecharModalDeclinio()" style="background:none; color:var(--text-light); box-shadow:none; margin-top:5px;">Cancelar e Voltar</button>
+                </div>
+            </div>
                 <div class="nav-tabs">
                     <div class="nav-tab active" onclick="mudarAba('minhas')">Minhas Escalas</div>
                     <div class="nav-tab" onclick="mudarAba('geral')">Todas as Escalas</div>
