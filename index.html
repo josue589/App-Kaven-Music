@@ -31,6 +31,7 @@
             border: 4px solid transparent;
             border-image: linear-gradient(to right, var(--primary), var(--success)) 1;
         }
+        
 
         @media (max-width: 768px) {
             body {
@@ -213,6 +214,8 @@
 </head>
 <body>
 
+    <!-- COLE O CÓDIGO DO PASSO 2 EXATAMENTE AQUI -->
+    <div id="toast-container"></div>
     <div class="container">
         <div id="tela-login">
             <div class="card-login-novo">
@@ -301,6 +304,26 @@
         if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
         let usuarioAtual = null;
         let novaFotoBase64 = null;
+
+        // --- FUNÇÃO PARA MOSTRAR NOTIFICAÇÕES MODERNAS ---
+        function mostrarNotificacao(mensagem, tipo = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${tipo}`;
+            
+            const icone = tipo === 'success' ? '✅' : '⚠️';
+            toast.innerHTML = `<span>${icone}</span> <span>${mensagem}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Remove a notificação automaticamente após 4 segundos
+            setTimeout(() => {
+                toast.style.animation = 'fadeOutToast 0.3s forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300); // Aguarda a animação de saída terminar
+            }, 4000);
+        }
 
         window.onload = () => {
             const userSalvo = localStorage.getItem('louvor_user');
