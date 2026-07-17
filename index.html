@@ -571,12 +571,13 @@
             document.getElementById('data-culto-escondida').value = '';
         }
 
-        async function confirmarDeclinioModal() {
+      async function confirmarDeclinioModal() {
             const substituto = document.getElementById('select-substituto').value;
             const dataCultoSalva = document.getElementById('data-culto-escondida').value;
             
             if (!substituto) {
-                alert("Por favor, selecione um integrante da lista para te substituir.");
+                // Trocamos o alert por mostrarNotificacao de ERRO
+                mostrarNotificacao("Por favor, selecione um integrante para te substituir.", "error");
                 return;
             }
 
@@ -590,13 +591,15 @@
             });
 
             if (res && res.sucesso) { 
-                alert("Escala declinada com sucesso. Substituto registrado!"); 
+                // Trocamos o alert por mostrarNotificacao de SUCESSO
+                mostrarNotificacao("Escala declinada com sucesso. Substituto registrado!", "success"); 
                 carregarMinhasEscalas(); 
             } else { 
-                alert("Falha ao declinar:\n" + (res && res.erro ? res.erro : "O servidor não processou o comando.")); 
+                // Trocamos o alert por mostrarNotificacao de ERRO
+                mostrarNotificacao("Falha ao declinar: " + (res && res.erro ? res.erro : "O servidor não processou o comando."), "error"); 
             }
         }
-async function carregarTodasEscalas() {
+    async function carregarTodasEscalas() {
             const div = document.getElementById('conteudo-aba');
             const res = await fetchAPI({ acao: 'todasEscalas' });
 
