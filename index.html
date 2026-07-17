@@ -229,6 +229,9 @@
                 <div id="modal-declinio" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center; padding:20px; box-sizing:border-box; backdrop-filter: blur(5px);">
                 <div class="card" style="max-width: 400px; width:100%; position:relative; animation: fadeIn 0.3s ease; border: 2px solid #B91C1C;">
                     <h3 style="color:#B91C1C; margin-top:0;">Declinar Escala</h3>
+                    
+                    <input type="hidden" id="data-culto-escondida">
+                    
                     <p style="font-size:14px; color:var(--text-light); margin-bottom: 20px;">Para declinar, é obrigatório informar quem irá cobrir sua vaga.</p>
                     
                     <label>Selecione o substituto:</label>
@@ -476,25 +479,20 @@
             if (res && res.sucesso) { alert("Presença confirmada!"); carregarMinhasEscalas(); } else { alert("Erro ao confirmar."); }
         }
 
-        let dataCultoDeclinio = null; // Guarda a data temporariamente
-
         async function solicitarDeclinio(dataIso) {
-            dataCultoDeclinio = dataIso;
             const modal = document.getElementById('modal-declinio');
             const select = document.getElementById('select-substituto');
             
-            // 1. Abre o modal e mostra mensagem de carregando
+            document.getElementById('data-culto-escondida').value = dataIso;
+            
             modal.style.display = 'flex';
             select.innerHTML = '<option value="">Buscando integrantes...</option>';
 
-            // 2. Puxa a lista de membros do seu banco de dados
             const res = await fetchAPI({ acao: 'listarMembros' });
 
-            // 3. Preenche o select com os nomes corretos
             if (res && res.sucesso && res.membros) {
                 select.innerHTML = '<option value="">Selecione quem vai no seu lugar...</option>';
                 res.membros.sort().forEach(membro => {
-                    // Evita listar o próprio nome do músico logado como opção de substituto
                     if (membro !== usuarioAtual.nome) {
                         select.innerHTML += `<option value="${membro}">${membro}</option>`;
                     }
@@ -507,23 +505,24 @@
         function fecharModalDeclinio() {
             document.getElementById('modal-declinio').style.display = 'none';
             document.getElementById('select-substituto').innerHTML = '';
-            dataCultoDeclinio = null;
+            document.getElementById('data-culto-escondida').value = '';
         }
 
         async function confirmarDeclinioModal() {
             const substituto = document.getElementById('select-substituto').value;
+            const dataCultoSalva = document.getElementById('data-culto-escondida').value;
             
             if (!substituto) {
                 alert("Por favor, selecione um integrante da lista para te substituir.");
                 return;
             }
 
-            fecharModalDeclinio(); // Fecha a tela e inicia o processo
+            fecharModalDeclinio(); 
 
             const res = await postAPI({ 
                 acao: 'declinarPresenca', 
                 nome: usuarioAtual.nome, 
-                dataCulto: dataCultoDeclinio, 
+                dataCulto: dataCultoSalva, 
                 substituto: substituto 
             });
 
