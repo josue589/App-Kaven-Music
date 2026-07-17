@@ -439,16 +439,16 @@
             }
         }
 
-        async function salvarConfiguracoes() {
+       async function salvarConfiguracoes() {
             const novoNome = document.getElementById('novo-nome').value.trim();
             const novoCodigo = document.getElementById('novo-codigo').value.trim();
-            if (!novoNome) { alert("O nome não pode hacker vazio!"); return; }
+            if (!novoNome) { mostrarNotificacao("O nome não pode ficar vazio!", "error"); return; }
 
             const dados = { acao: 'salvarPerfil', codigoAtual: usuarioAtual.codigoOriginal, novoNome: novoNome, novoCodigo: novoCodigo, novaFoto: novaFotoBase64 };
             const res = await postAPI(dados);
 
             if (res && res.sucesso) {
-                alert("Perfil atualizado com sucesso!");
+                mostrarNotificacao("Perfil atualizado com sucesso!", "success");
                 usuarioAtual.nome = novoNome;
                 if (novoCodigo) usuarioAtual.codigoOriginal = novoCodigo;
                 if (novaFotoBase64) usuarioAtual.foto = novaFotoBase64;
@@ -456,7 +456,9 @@
                 document.getElementById('user-nome').textContent = usuarioAtual.nome;
                 if (usuarioAtual.foto) document.getElementById('img-perfil').src = usuarioAtual.foto;
                 fecharConfiguracoes();
-            } else { alert("Erro ao salvar: " + (res ? res.erro : "Falha na conexão.")); }
+            } else { 
+                mostrarNotificacao("Erro ao salvar: " + (res ? res.erro : "Falha na conexão."), "error"); 
+            }
         }
 
         function mudarAba(aba) {
@@ -537,9 +539,14 @@
             }
         }
 
-        async function confirmar(dataIso) {
+       async function confirmar(dataIso) {
             const res = await postAPI({ acao: 'confirmarPresenca', nome: usuarioAtual.nome, dataCulto: dataIso });
-            if (res && res.sucesso) { alert("Presença confirmada!"); carregarMinhasEscalas(); } else { alert("Erro ao confirmar."); }
+            if (res && res.sucesso) { 
+                mostrarNotificacao("Presença confirmada com sucesso!", "success"); 
+                carregarMinhasEscalas(); 
+            } else { 
+                mostrarNotificacao("Erro ao confirmar presença.", "error"); 
+            }
         }
 
         async function solicitarDeclinio(dataIso) {
@@ -710,13 +717,13 @@
                 inputNome.placeholder = "Erro ao carregar nomes";
             }
         }
-        async function salvarNovaEscala() {
+       async function salvarNovaEscala() {
             const data = document.getElementById('cad-esc-data').value;
             const funcao = document.getElementById('cad-esc-funcao').value.trim();
             const nome = document.getElementById('cad-esc-nome').value.trim();
-            if(!data || !funcao || !nome) { alert("Preencha todos os campos!"); return; }
+            if(!data || !funcao || !nome) { mostrarNotificacao("Preencha todos os campos!", "error"); return; }
             const res = await postAPI({ acao: 'cadastrarEscala', data: data, funcao: funcao, nomeMembro: nome });
-            if(res && res.sucesso) { alert("Escala cadastrada com sucesso!"); mudarAba('admin'); } else { alert("Erro ao salvar."); }
+            if(res && res.sucesso) { mostrarNotificacao("Escala cadastrada com sucesso!", "success"); mudarAba('admin'); } else { mostrarNotificacao("Erro ao salvar a escala.", "error"); }
         }
 
         function abrirFormRepertorio() {
@@ -741,9 +748,9 @@
             const tom = document.getElementById('cad-rep-tom').value.trim();
             const cifra = document.getElementById('cad-rep-cifra').value.trim();
             const youtube = document.getElementById('cad-rep-youtube').value.trim();
-            if(!data || !nome) { alert("Data e Nome da música são obrigatórios!"); return; }
+            if(!data || !nome) { mostrarNotificacao("Data e Nome da música são obrigatórios!", "error"); return; }
             const res = await postAPI({ acao: 'cadastrarRepertorio', data: data, ordem: ordem, musica: nome, tom: tom, cifra: cifra, youtube: youtube });
-            if(res && res.sucesso) { alert("Música adicionada ao repertório!"); mudarAba('admin'); } else { alert("Erro ao salvar."); }
+            if(res && res.sucesso) { mostrarNotificacao("Música adicionada ao repertório!", "success"); mudarAba('admin'); } else { mostrarNotificacao("Erro ao salvar a música.", "error"); }
         }
 
         function abrirFormMembro() {
@@ -762,9 +769,9 @@
             const nome = document.getElementById('cad-mem-nome').value.trim();
             const codigo = document.getElementById('cad-mem-codigo').value.trim();
             const funcao = document.getElementById('cad-mem-funcao').value.trim();
-            if(!nome || !codigo || !funcao) { alert("Preencha todos os campos!"); return; }
+            if(!nome || !codigo || !funcao) { mostrarNotificacao("Preencha todos os campos!", "error"); return; }
             const res = await postAPI({ acao: 'cadastrarMembro', nome: nome, codigo: codigo, funcao: funcao });
-            if(res && res.sucesso) { alert("Membro cadastrado com sucesso!"); mudarAba('admin'); } else { alert("Erro ao salvar."); }
+            if(res && res.sucesso) { mostrarNotificacao("Membro cadastrado com sucesso!", "success"); mudarAba('admin'); } else { mostrarNotificacao("Erro ao salvar integrante.", "error"); }
         }
 
         async function carregarProximaEscala() {
