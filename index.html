@@ -522,7 +522,7 @@
                             statusHTML = `<span class="status-pendente">⏳ Aguardando Confirmação</span>`;
                             botoesHTML = `
                             <div class="botoes-escala">
-                                <button class="btn-success" style="margin-top: 0;" onclick="confirmar('${escala.data}', '${escala.funcao}')">Confirmar Presença</button>
+                                <button class="btn-success" style="margin-top: 0;" onclick="confirmar('${esc.data}')">Confirmar Presença</button>
                                 <button class="btn-danger" style="margin-top: 0;" onclick="solicitarDeclinio('${esc.data}')">Declinar Escala</button>
                             </div>`;
                         }
@@ -539,13 +539,8 @@
             }
         }
 
-       async function confirmar(dataIso, funcaoDaEscala) {
-            const res = await postAPI({ 
-                acao: 'confirmarPresenca', 
-                nome: usuarioAtual.nome, 
-                dataCulto: dataIso, 
-                funcao: funcaoDaEscala 
-            });
+       async function confirmar(dataIso) {
+            const res = await postAPI({ acao: 'confirmarPresenca', nome: usuarioAtual.nome, dataCulto: dataIso });
             if (res && res.sucesso) { 
                 mostrarNotificacao("Presença confirmada com sucesso!", "success"); 
                 carregarMinhasEscalas(); 
