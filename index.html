@@ -540,7 +540,7 @@
         }
 
        async function confirmar(dataIso) {
-            const res = await postAPI({ acao: 'confirmarPresenca', nome: usuarioAtual.nome, dataCulto: dataIso });
+            const res = await postAPI({ acao: 'confirmarPresenca', nome: usuarioAtual.nome, dataCulto: dataIso, funcao: funcaoDaEscala });
             if (res && res.sucesso) { 
                 mostrarNotificacao("Presença confirmada com sucesso!", "success"); 
                 carregarMinhasEscalas(); 
