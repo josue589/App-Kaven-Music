@@ -10,7 +10,7 @@ const CONFIG = {
         },
         "itc": {
             nome: "Igreja ITC",
-            url: "URL_DA_ITC_NO_FUTURO"
+            url: https://script.google.com/macros/s/AKfycbyhaEVoYbLZwGT3rWCFbTBXXNdVLOK_MQgJ9M_KYZMT4-ygqGP_mCh3_fqWXGYoHGOO/exec
         }
     }
 };
