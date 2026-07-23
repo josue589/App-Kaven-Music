@@ -214,7 +214,6 @@
 </head>
 <body>
 
-    <!-- COLE O CÓDIGO DO PASSO 2 EXATAMENTE AQUI -->
     <div id="toast-container"></div>
     <div class="container">
         <div id="tela-login">
@@ -274,6 +273,7 @@
                     <h3 style="color:#B91C1C; margin-top:0;">Declinar Escala</h3>
                     
                     <input type="hidden" id="data-culto-escondida">
+                    <input type="hidden" id="funcao-escondida">
                     
                     <p style="font-size:14px; color:var(--text-light); margin-bottom: 20px;">Para declinar, é obrigatório informar quem irá cobrir sua vaga.</p>
                     
@@ -522,8 +522,8 @@
                             statusHTML = `<span class="status-pendente">⏳ Aguardando Confirmação</span>`;
                             botoesHTML = `
                             <div class="botoes-escala">
-                                <button class="btn-success" style="margin-top: 0;" onclick="confirmar('${esc.data}')">Confirmar Presença</button>
-                                <button class="btn-danger" style="margin-top: 0;" onclick="solicitarDeclinio('${esc.data}')">Declinar Escala</button>
+                                <button class="btn-success" style="margin-top: 0;" onclick="confirmar('${esc.data}', '${esc.funcao}')">Confirmar Presença</button>
+                                <button class="btn-danger" style="margin-top: 0;" onclick="solicitarDeclinio('${esc.data}', '${esc.funcao}')">Declinar Escala</button>
                             </div>`;
                         }
                         
@@ -539,8 +539,13 @@
             }
         }
 
-       async function confirmar(dataIso) {
-            const res = await postAPI({ acao: 'confirmarPresenca', nome: usuarioAtual.nome, dataCulto: dataIso });
+       async function confirmar(dataIso, funcaoDaEscala) {
+            const res = await postAPI({ 
+                acao: 'confirmarPresenca', 
+                nome: usuarioAtual.nome, 
+                dataCulto: dataIso,
+                funcao: funcaoDaEscala 
+            });
             if (res && res.sucesso) { 
                 mostrarNotificacao("Presença confirmada com sucesso!", "success"); 
                 carregarMinhasEscalas(); 
@@ -549,11 +554,12 @@
             }
         }
 
-        async function solicitarDeclinio(dataIso) {
+        async function solicitarDeclinio(dataIso, funcaoDaEscala) {
             const modal = document.getElementById('modal-declinio');
             const select = document.getElementById('select-substituto');
             
             document.getElementById('data-culto-escondida').value = dataIso;
+            document.getElementById('funcao-escondida').value = funcaoDaEscala;
             
             modal.style.display = 'flex';
             select.innerHTML = '<option value="">Buscando integrantes...</option>';
@@ -576,14 +582,15 @@
             document.getElementById('modal-declinio').style.display = 'none';
             document.getElementById('select-substituto').innerHTML = '';
             document.getElementById('data-culto-escondida').value = '';
+            document.getElementById('funcao-escondida').value = '';
         }
 
       async function confirmarDeclinioModal() {
             const substituto = document.getElementById('select-substituto').value;
             const dataCultoSalva = document.getElementById('data-culto-escondida').value;
+            const funcaoSalva = document.getElementById('funcao-escondida').value;
             
             if (!substituto) {
-                // Trocamos o alert por mostrarNotificacao de ERRO
                 mostrarNotificacao("Por favor, selecione um integrante para te substituir.", "error");
                 return;
             }
@@ -594,15 +601,14 @@
                 acao: 'declinarPresenca', 
                 nome: usuarioAtual.nome, 
                 dataCulto: dataCultoSalva, 
-                substituto: substituto 
+                substituto: substituto,
+                funcao: funcaoSalva
             });
 
             if (res && res.sucesso) { 
-                // Trocamos o alert por mostrarNotificacao de SUCESSO
                 mostrarNotificacao("Escala declinada com sucesso. Substituto registrado!", "success"); 
                 carregarMinhasEscalas(); 
             } else { 
-                // Trocamos o alert por mostrarNotificacao de ERRO
                 mostrarNotificacao("Falha ao declinar: " + (res && res.erro ? res.erro : "O servidor não processou o comando."), "error"); 
             }
         }
