@@ -8,7 +8,6 @@ const CONFIG = {
         },
         "itc": {
             nome: "Igreja ITC",
-           
             url: "https://script.google.com/macros/s/AKfycbxI65aCDcb7UlURJndxbG39Tz4mZC-F8H3ND0ck6G51lDE993pJvN0K22yNdqrcGCiS/exec"
         }
     }
