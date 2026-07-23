@@ -8,9 +8,8 @@ const CONFIG = {
         },
         "itc": {
             nome: "Igreja ITC",
-            // Atenção: coloquei uma URL vazia por enquanto para não dar erro.
-            // Quando for usar a ITC, gere a URL do App da Web (terminada em /exec) e cole aqui dentro das aspas.
-            url: ""
+           
+            url: "https://script.google.com/macros/s/AKfycbxI65aCDcb7UlURJndxbG39Tz4mZC-F8H3ND0ck6G51lDE993pJvN0K22yNdqrcGCiS/exec"
         }
     }
 };
