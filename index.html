@@ -18,28 +18,13 @@
             --card-bg: #FFFFFF;
         }
     
-        body {
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--bg); 
-            background-image: url('FundoHDN.png'); background-size: cover; background-position: center; background-attachment: fixed; image-rendering: auto;
-            color: var(--text); 
-            margin: 0; 
-            padding: 0; 
-            -webkit-font-smoothing: antialiased; 
-            min-height: 100vh; 
-            box-sizing: border-box; 
-            border: 4px solid transparent;
-            border-image: linear-gradient(to right, var(--primary), var(--success)) 1;
-        }
-        
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); background-image: url('FundoHDN.png'); background-size: cover; background-position: center; background-attachment: fixed; image-rendering: auto; color: var(--text); margin: 0; padding: 0; -webkit-font-smoothing: antialiased; min-height: 100vh; box-sizing: border-box; border: 4px solid transparent; border-image: linear-gradient(to right, var(--primary), var(--success)) 1; }
         @media (max-width: 768px) { body { border-width: 0px; } }
-        
         .container { padding: 20px; max-width: 600px; margin: 0 auto; margin-top: 8vh; }
         #tela-login { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; }
         #tela-app { display: none; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* CABEÇALHO */
         .header-app { background: var(--card-bg); padding: 15px 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.03); }
         .header-app::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(to right, var(--primary), var(--success)); }
         .profile-pic { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--success); padding: 2px; overflow: hidden; flex-shrink: 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -103,7 +88,6 @@
     <div id="toast-container"></div>
     <div class="container">
         
-        <!-- TELA DE LOGIN ATUALIZADA: EMAIL E SENHA -->
         <div id="tela-login">
             <div class="card-login-novo">
                 <img src="Logo grande.png?v=3" alt="Logo Louve" style="width: 125px; height: 110px; border-radius: 20px; margin-bottom: 15px; object-fit: cover;">
@@ -130,17 +114,27 @@
                 <button class="btn-logout" onclick="fazerLogout()">Sair</button>
             </div>
 
+            <!-- TELA DE CONFIGURAÇÕES ATUALIZADA (E-MAIL E SENHA) -->
             <div id="tela-config" style="display: none; animation: fadeIn 0.4s ease;">
                 <div class="card">
                     <h3 style="margin-top:0; color:var(--primary); text-align:center; margin-bottom: 20px;">Configurações do Perfil</h3>
+                    
                     <div style="text-align: center;">
                         <img id="preview-nova-foto" src="" alt="Nova Foto" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 10px;">
                         <input type="file" id="nova-foto" accept="image/*" style="display:none;" onchange="carregarPreviewFoto(event)">
-                        <button type="button" onclick="document.getElementById('nova-foto').click()" style="background: var(--bg); color: var(--text); box-shadow: none; border: 1px solid #ccc; width:auto; padding: 8px 16px; font-size: 14px; margin-bottom: 25px;">📷 Escolher nova foto</button>
+                        <button type="button" onclick="document.getElementById('nova-foto').click()" style="background: var(--bg); color: var(--text); box-shadow: none; border: 1px solid #ccc; width:auto; padding: 8px 16px; font-size: 14px; margin-bottom: 15px;">📷 Escolher nova foto</button>
                     </div>
+                    
                     <label>Seu Nome de Exibição</label>
                     <input type="text" id="novo-nome" placeholder="Digite seu nome">
-                    <button onclick="salvarConfiguracoes()" style="margin-top: 15px;">💾 Salvar Alterações</button>
+                    
+                    <label>Seu E-mail de Acesso</label>
+                    <input type="email" id="novo-email" placeholder="Digite seu e-mail">
+                    
+                    <label>Nova Senha (deixe em branco para não mudar)</label>
+                    <input type="password" id="nova-senha" placeholder="Digite a nova senha">
+
+                    <button id="btn-salvar-perfil" onclick="salvarConfiguracoes()" style="margin-top: 15px;">💾 Salvar Alterações</button>
                     <button onclick="fecharConfiguracoes()" style="background: transparent; color: var(--text-light); box-shadow: none; margin-top: 5px;">Cancelar</button>
                 </div>
             </div>
@@ -200,12 +194,8 @@
             }
         };
 
-        // Função mágica que descobre pra onde enviar os dados dependendo de qual igreja o usuário pertence
-        function getScriptUrl() {
-            return CONFIG.IGREJAS[usuarioAtual.igrejaId].url;
-        }
+        function getScriptUrl() { return CONFIG.IGREJAS[usuarioAtual.igrejaId].url; }
 
-        // Funções de comunicação HTTP adaptadas
         async function fetchAPI(urlBase, parametros) {
             mostrarLoading(true);
             try {
@@ -239,7 +229,6 @@
             btn.textContent = "⏳ Verificando...";
             btn.disabled = true;
 
-            // 1. O App pergunta ao "Porteiro" (Master)
             const resMaster = await fetchAPI(CONFIG.MASTER_URL, { acao: 'login', email: email, senha: senha });
 
             if (resMaster && resMaster.sucesso) {
@@ -252,25 +241,16 @@
                     return;
                 }
 
-                // 2. Se o porteiro autorizou, o App entra na base da Igreja específica
                 btn.textContent = "⏳ Conectando...";
                 const urlIgreja = CONFIG.IGREJAS[igrejaId].url;
 
-                // Usamos a senha (que o usuário digitou) como o "codigo" que já funciona na sua base hoje
                 const resIgreja = await fetchAPI(urlIgreja, { acao: 'login', codigo: senha });
 
                 btn.textContent = textoOriginal;
                 btn.disabled = false;
 
                 if (resIgreja && resIgreja.sucesso) {
-                    usuarioAtual = {
-                        nome: resIgreja.nome,
-                        funcao: resIgreja.funcao,
-                        foto: resIgreja.foto || null,
-                        codigoOriginal: senha,
-                        igrejaId: igrejaId,
-                        email: email
-                    };
+                    usuarioAtual = { nome: resIgreja.nome, funcao: resIgreja.funcao, foto: resIgreja.foto || null, codigoOriginal: senha, igrejaId: igrejaId, email: email };
                     localStorage.setItem('louvor_user', JSON.stringify(usuarioAtual)); 
                     mostrarApp();
                 } else { 
@@ -312,10 +292,84 @@
             mudarAba('minhas');
         }
 
-        function abrirConfiguracoes() { document.getElementById('area-conteudo-principal').style.display = 'none'; document.getElementById('tela-config').style.display = 'block'; document.getElementById('novo-nome').value = usuarioAtual.nome; document.getElementById('preview-nova-foto').src = document.getElementById('img-perfil').src; novaFotoBase64 = null; }
+        // CARREGA OS DADOS PARA EDIÇÃO
+        function abrirConfiguracoes() { 
+            document.getElementById('area-conteudo-principal').style.display = 'none'; 
+            document.getElementById('tela-config').style.display = 'block'; 
+            document.getElementById('novo-nome').value = usuarioAtual.nome; 
+            document.getElementById('novo-email').value = usuarioAtual.email || ""; 
+            document.getElementById('nova-senha').value = ""; 
+            document.getElementById('preview-nova-foto').src = document.getElementById('img-perfil').src; 
+            novaFotoBase64 = null; 
+        }
+        
         function fecharConfiguracoes() { document.getElementById('tela-config').style.display = 'none'; document.getElementById('area-conteudo-principal').style.display = 'block'; }
+        
         function carregarPreviewFoto(event) { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); const tamanhoMaximo = 150; const scale = tamanhoMaximo / img.width; canvas.width = tamanhoMaximo; canvas.height = img.height * scale; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); novaFotoBase64 = canvas.toDataURL('image/jpeg', 0.7); document.getElementById('preview-nova-foto').src = novaFotoBase64; }; img.src = e.target.result; }; reader.readAsDataURL(file); } }
-        async function salvarConfiguracoes() { const novoNome = document.getElementById('novo-nome').value.trim(); if (!novoNome) { mostrarNotificacao("O nome não pode ficar vazio!", "error"); return; } const dados = { acao: 'salvarPerfil', codigoAtual: usuarioAtual.codigoOriginal, novoNome: novoNome, novaFoto: novaFotoBase64 }; const res = await postAPI(getScriptUrl(), dados); if (res && res.sucesso) { mostrarNotificacao("Perfil atualizado com sucesso!", "success"); usuarioAtual.nome = novoNome; if (novaFotoBase64) usuarioAtual.foto = novaFotoBase64; localStorage.setItem('louvor_user', JSON.stringify(usuarioAtual)); document.getElementById('user-nome').textContent = usuarioAtual.nome; if (usuarioAtual.foto) document.getElementById('img-perfil').src = usuarioAtual.foto; fecharConfiguracoes(); } else { mostrarNotificacao("Erro ao salvar.", "error"); } }
+        
+        // SALVA AS ALTERAÇÕES DE E-MAIL E SENHA NOS 2 BANCOS DE DADOS
+        async function salvarConfiguracoes() { 
+            const novoNome = document.getElementById('novo-nome').value.trim(); 
+            const novoEmail = document.getElementById('novo-email').value.trim().toLowerCase();
+            const novaSenha = document.getElementById('nova-senha').value.trim();
+            
+            if (!novoNome || !novoEmail) { 
+                mostrarNotificacao("Nome e E-mail são obrigatórios!", "error"); 
+                return; 
+            } 
+            
+            const btnSalvar = document.getElementById('btn-salvar-perfil');
+            btnSalvar.textContent = "⏳ Salvando...";
+            btnSalvar.disabled = true;
+
+            // Se o usuário não digitou nova senha, mantém a antiga para enviar ao servidor
+            const senhaParaSalvar = novaSenha ? novaSenha : usuarioAtual.codigoOriginal;
+
+            // 1. Atualiza no Porteiro (Planilha Mestra)
+            const resMaster = await postAPI(CONFIG.MASTER_URL, { 
+                acao: 'atualizar_login', 
+                emailAtual: usuarioAtual.email, 
+                novoEmail: novoEmail, 
+                novaSenha: senhaParaSalvar 
+            });
+            
+            if (!resMaster || !resMaster.sucesso) { 
+                mostrarNotificacao("Erro ao atualizar credenciais no servidor central.", "error"); 
+                btnSalvar.textContent = "💾 Salvar Alterações"; btnSalvar.disabled = false;
+                return; 
+            }
+
+            // 2. Atualiza na Igreja Local
+            const dadosLocal = { 
+                acao: 'salvarPerfil', 
+                codigoAtual: usuarioAtual.codigoOriginal, 
+                novoNome: novoNome, 
+                novaSenha: senhaParaSalvar,
+                novaFoto: novaFotoBase64 
+            }; 
+            
+            const resLocal = await postAPI(getScriptUrl(), dadosLocal); 
+            
+            if (resLocal && resLocal.sucesso) { 
+                mostrarNotificacao("Perfil atualizado com sucesso!", "success"); 
+                
+                // Atualiza a sessão no celular do usuário
+                usuarioAtual.nome = novoNome; 
+                usuarioAtual.email = novoEmail;
+                usuarioAtual.codigoOriginal = senhaParaSalvar;
+                if (novaFotoBase64) usuarioAtual.foto = novaFotoBase64; 
+                
+                localStorage.setItem('louvor_user', JSON.stringify(usuarioAtual)); 
+                document.getElementById('user-nome').textContent = usuarioAtual.nome; 
+                if (usuarioAtual.foto) document.getElementById('img-perfil').src = usuarioAtual.foto; 
+                fecharConfiguracoes(); 
+            } else { 
+                mostrarNotificacao("Erro ao salvar dados locais.", "error"); 
+            } 
+            
+            btnSalvar.textContent = "💾 Salvar Alterações"; btnSalvar.disabled = false;
+        }
+        
         function mudarAba(aba) { document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); if(event) event.target.classList.add('active'); const div = document.getElementById('conteudo-aba'); div.innerHTML = ''; if (aba === 'minhas') carregarMinhasEscalas(); if (aba === 'geral') carregarProximaEscala(); if (aba === 'repertorio') carregarRepertorio(); if (aba === 'admin') carregarTodasEscalas(); }
         function formatarData(dataIso) { if(!dataIso) return ""; const d = new Date(dataIso); d.setMinutes(d.getMinutes() + d.getTimezoneOffset()); return d.toLocaleDateString('pt-BR'); }
         
@@ -333,7 +387,6 @@
         function abrirFormRepertorio() { document.getElementById('conteudo-aba').innerHTML = `<div class="card"><h3 style="color:var(--primary); margin-top:0;">🎵 Adicionar Música ao Culto</h3><label>Data do Culto:</label> <input type="date" id="cad-rep-data"><label>Ordem da Música:</label> <input type="number" id="cad-rep-ordem" placeholder="Ex: 1"><label>Nome da Música:</label> <input type="text" id="cad-rep-nome" placeholder="Ex: Grato Sou"><label>Tom da Música:</label> <input type="text" id="cad-rep-tom" placeholder="Ex: E"><label>Link da Cifra (Google Drive):</label> <input type="url" id="cad-rep-cifra" placeholder="https://drive.google.com/..."><label>Link do YouTube:</label> <input type="url" id="cad-rep-youtube" placeholder="https://youtube.com/..."><button onclick="salvarNovoRepertorio()" style="margin-top:15px;">💾 Salvar Música</button><button onclick="mudarAba('admin')" style="background:none; color:var(--text-light); box-shadow:none; margin-top:5px;">Cancelar</button></div>`; }
         async function salvarNovoRepertorio() { const data = document.getElementById('cad-rep-data').value; const ordem = document.getElementById('cad-rep-ordem').value; const nome = document.getElementById('cad-rep-nome').value.trim(); const tom = document.getElementById('cad-rep-tom').value.trim(); const cifra = document.getElementById('cad-rep-cifra').value.trim(); const youtube = document.getElementById('cad-rep-youtube').value.trim(); if(!data || !nome) { mostrarNotificacao("Data e Nome da música são obrigatórios!", "error"); return; } const res = await postAPI(getScriptUrl(), { acao: 'cadastrarRepertorio', data: data, ordem: ordem, musica: nome, tom: tom, cifra: cifra, youtube: youtube }); if(res && res.sucesso) { mostrarNotificacao("Música adicionada ao repertório!", "success"); mudarAba('admin'); } else { mostrarNotificacao("Erro ao salvar a música.", "error"); } }
         
-        // NOVO CADASTRO DE MEMBRO: AGORA SALVA NAS DUAS BASES
         function abrirFormMembro() { document.getElementById('conteudo-aba').innerHTML = `<div class="card"><h3 style="color:var(--primary); margin-top:0;">👥 Cadastrar Novo Integrante</h3><label>Nome Completo:</label> <input type="text" id="cad-mem-nome" placeholder="Ex: Lucas Santos"><label>E-mail (Para o App):</label> <input type="email" id="cad-mem-email" placeholder="Ex: lucas@email.com"><label>Senha de Acesso:</label> <input type="password" id="cad-mem-codigo" placeholder="Ex: 123456"><label>Função Principal:</label> <input type="text" id="cad-mem-funcao" placeholder="Ex: Vocal, Bateria..."><button onclick="salvarNovoMembro()" style="margin-top:15px;">💾 Cadastrar Integrante</button><button onclick="mudarAba('admin')" style="background:none; color:var(--text-light); box-shadow:none; margin-top:5px;">Cancelar</button></div>`; }
         
         async function salvarNovoMembro() { 
@@ -344,11 +397,9 @@
             
             if(!nome || !email || !codigo || !funcao) { mostrarNotificacao("Preencha todos os campos!", "error"); return; } 
             
-            // 1. Cadastra no Porteiro (Planilha Mestra)
             const resMaster = await postAPI(CONFIG.MASTER_URL, { acao: 'cadastrar_login', email: email, senha: codigo, igrejaId: usuarioAtual.igrejaId });
             if(!resMaster || !resMaster.sucesso) { mostrarNotificacao("Erro ao criar login no servidor central.", "error"); return; }
 
-            // 2. Cadastra na Igreja local
             const res = await postAPI(getScriptUrl(), { acao: 'cadastrarMembro', nome: nome, codigo: codigo, funcao: funcao }); 
             
             if(res && res.sucesso) { 
