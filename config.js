@@ -1,14 +1,16 @@
 const CONFIG = {
-    // Aqui você cadastra suas igrejas clientes. 
-    // A palavra antes dos dois pontos (ex: "shalom") é o ID que o membro vai digitar no login.
+    // Essa é a URL do "Porteiro" que você acabou de gerar
+    MASTER_URL: "https://script.google.com/macros/s/AKfycbyOaOHT8iyD1mnvAJt2oL0bdEDHLI0vHXDO2kIvYhn-rDIT4sn6ILxia2gJLtv3rDXerw/exec",
+    
     IGREJAS: {
         "shalom": {
             nome: "Shalom Music",
-            url: "https://script.google.com/macros/s/AKfycbxhC5GvuzqpzmPIlM0nircdiWKgXhZZRM4DJ7wGufizZWbRZZBTUV2CrROnBMAkwojJ_g/exec"
+            // COLOQUE AQUI A URL DO APPS SCRIPT ORIGINAL DA SHALOM (Aquela que já estava no seu config.js antigo)
+            url: "https://script.google.com/macros/s/AKfycbxhC5GvuzqpzmPIlM0nircdiWKgXhZZRM4DJ7wGufizZWbRZZBTUV2CrROnBMAkwojJ_g/exec" 
         },
         "itc": {
             nome: "Igreja ITC",
-            url: "URL_DO_APPS_SCRIPT_DA_ITC_AQUI" // URL do Google Apps Script da ITC
+            url: "URL_DA_ITC_NO_FUTURO"
         }
     }
 };
